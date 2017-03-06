@@ -1,0 +1,23 @@
+extends layout
+
+mixin input(type, placeholder, id)
+    input(id=id type=type placeholder=placeholder)
+
+block content
+  h1= title
+  #content
+    p 
+      | Role:
+      |
+      +input("text", "CEO", "role")
+    p 
+      | Goal: 
+      |
+      +input("text", "Made dashboard", "goal")
+    input(
+      id="get-docs",
+      type='button'
+      value='Get Docs',
+      onclick="getDocs"
+    ) 
+      
