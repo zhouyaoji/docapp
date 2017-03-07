@@ -4,20 +4,135 @@ mixin input(type, placeholder, id)
     input(id=id type=type placeholder=placeholder)
 
 block content
-  h1= title
-  #content
-    p 
-      | Role:
-      |
-      +input("text", "CEO", "role")
-    p 
-      | Goal: 
-      |
-      +input("text", "Made dashboard", "goal")
-    input(
-      id="get-docs",
-      type='button'
-      value='Get Docs',
-      onclick="getDocs"
-    ) 
-      
+  h1="AppD's Doc Adventure"
+
+  h2 Filter
+  #filters.button-group
+    button.button.is-checked(data-filter='*') show all
+    |  
+    button.button(data-filter='.metal') metal
+    |  
+    button.button(data-filter='.transition') transition
+    |  
+    button.button(data-filter='.alkali, .alkaline-earth') alkali and alkaline-earth
+    |  
+    button.button(data-filter=':not(.transition)') not transition
+    |  
+    button.button(data-filter='.metal:not(.transition)') metal but not transition
+    |  
+    button.button(data-filter='numberGreaterThan50') number &gt; 50
+    |  
+    button.button(data-filter='ium') name ends with &ndash;ium
+  h2 Sort
+  #sorts.button-group
+    button.button.is-checked(data-sort-by='original-order') original order
+    |  
+    button.button(data-sort-by='name') name
+    |  
+    button.button(data-sort-by='symbol') symbol
+    |  
+    button.button(data-sort-by='number') number
+    |  
+    button.button(data-sort-by='weight') weight
+    |  
+    button.button(data-sort-by='category') category
+  .grid
+    .element-item.transition.metal(data-category='transition')
+      h3.name Mercury
+      p.symbol Hg
+      p.number 80
+      p.weight 200.59
+    .element-item.metalloid(data-category='metalloid')
+      h3.name Tellurium
+      p.symbol Te
+      p.number 52
+      p.weight 127.6
+    .element-item.post-transition.metal(data-category='post-transition')
+      h3.name Bismuth
+      p.symbol Bi
+      p.number 83
+      p.weight 208.980
+    .element-item.post-transition.metal(data-category='post-transition')
+      h3.name Lead
+      p.symbol Pb
+      p.number 82
+      p.weight 207.2
+    .element-item.transition.metal(data-category='transition')
+      h3.name Gold
+      p.symbol Au
+      p.number 79
+      p.weight 196.967
+    .element-item.alkali.metal(data-category='alkali')
+      h3.name Potassium
+      p.symbol K
+      p.number 19
+      p.weight 39.0983
+    .element-item.alkali.metal(data-category='alkali')
+      h3.name Sodium
+      p.symbol Na
+      p.number 11
+      p.weight 22.99
+    .element-item.transition.metal(data-category='transition')
+      h3.name Cadmium
+      p.symbol Cd
+      p.number 48
+      p.weight 112.411
+    .element-item.alkaline-earth.metal(data-category='alkaline-earth')
+      h3.name Calcium
+      p.symbol Ca
+      p.number 20
+      p.weight 40.078
+    .element-item.transition.metal(data-category='transition')
+      h3.name Rhenium
+      p.symbol Re
+      p.number 75
+      p.weight 186.207
+    .element-item.post-transition.metal(data-category='post-transition')
+      h3.name Thallium
+      p.symbol Tl
+      p.number 81
+      p.weight 204.383
+    .element-item.metalloid(data-category='metalloid')
+      h3.name Antimony
+      p.symbol Sb
+      p.number 51
+      p.weight 121.76
+    .element-item.transition.metal(data-category='transition')
+      h3.name Cobalt
+      p.symbol Co
+      p.number 27
+      p.weight 58.933
+    .element-item.lanthanoid.metal.inner-transition(data-category='lanthanoid')
+      h3.name Ytterbium
+      p.symbol Yb
+      p.number 70
+      p.weight 173.054
+    .element-item.noble-gas.nonmetal(data-category='noble-gas')
+      h3.name Argon
+      p.symbol Ar
+      p.number 18
+      p.weight 39.948
+    .element-item.diatomic.nonmetal(data-category='diatomic')
+      h3.name Nitrogen
+      p.symbol N
+      p.number 7
+      p.weight 14.007
+    .element-item.actinoid.metal.inner-transition(data-category='actinoid')
+      h3.name Uranium
+      p.symbol U
+      p.number 92
+      p.weight 238.029
+    .element-item.actinoid.metal.inner-transition(data-category='actinoid')
+      h3.name Plutonium
+      p.symbol Pu
+      p.number 94
+      p.weight (244)
+
+  h2 Get Docs
+    .getdocs
+      input(
+        id="docsbutton",
+        type='button'
+        value='Get Docs',
+      )  
+    #docslink

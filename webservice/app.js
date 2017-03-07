@@ -5,9 +5,20 @@ var async = require('async');
 var app = express();
 app.set('port', 1377);
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+
 app.get('/builddocs', function(req, res, next) {
   var username = req.query.username || "anonymous";
-  var writepath = "../../public/docs/" + username + "_" + Date.now().toString();
+  var docpath = "/docs/" + username + "_" + Date.now().toString();
+  var path = "../../public" + docpath
+  var domain = req.get('host')
+  var port = req.get('port')
   async.series([
     function(callback) {  
       mkdocs.builddocs('release-note-test', function (err) {
@@ -18,22 +29,16 @@ app.get('/builddocs', function(req, res, next) {
       })
     },
     function(callback) {
-      mkdocs.mvdocs("site", writepath, function (err) {
+      mkdocs.mvdocs("site", path, function (err) {
         if(err) {
           return callback(res.status(500).json({ msg: "Couldn't move docs." }))
         } else {
-          res.status(200).json({ msg: "See your docs at docs/release-note-test" })
-          callback()
+          res.status(200).json({ domain: domain, path: docpath, port: port })
         }
+        callback()
      })
-  }], function (err) {
-        if (err) {
-          //Handle the error in some way. Here we simply throw it
-          //Other options: pass it on to an outer callback, log it etc.
-          throw err;
-       }
-       console.log('Error!');
-  });
+    }
+  ]);
   next()
 });
 
